@@ -141,18 +141,95 @@
                 </div>
             </div>
 
-            <!-- Table Card -->
+            <!-- Table Card - With Mobile Card View -->
             <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden animate-slideIn">
-                <div class="overflow-x-auto">
+                <!-- Mobile View: Cards -->
+                <div class="md:hidden divide-y divide-gray-200">
+                    @forelse($attendances as $attendance)
+                        <div class="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
+                            <!-- Date and Status Header -->
+                            <div class="flex items-center justify-between gap-3 mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-sm font-bold text-indigo-700">{{ $attendance->clock_in_at->format('d') }}</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-900">{{ $attendance->clock_in_at->format('d M Y') }}</div>
+                                        <div class="text-xs text-gray-500">{{ $attendance->clock_in_at->format('l') }}</div>
+                                    </div>
+                                </div>
+                                @if($attendance->status === 'ok')
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200">
+                                        ✓
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
+                                        ✕
+                                    </span>
+                                @endif
+                            </div>
+
+                            <!-- Time Details -->
+                            <div class="space-y-2 mb-4">
+                                <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <span class="text-xs font-semibold text-gray-700">Clock In</span>
+                                    <span class="font-mono font-bold text-green-900">{{ $attendance->clock_in_at->format('H:i') }}</span>
+                                </div>
+                                @if($attendance->clock_out_at)
+                                    <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-200">
+                                        <span class="text-xs font-semibold text-gray-700">Clock Out</span>
+                                        <span class="font-mono font-bold text-orange-900">{{ $attendance->clock_out_at->format('H:i') }}</span>
+                                    </div>
+                                    @php
+                                        $duration = $attendance->clock_out_at->diffInMinutes($attendance->clock_in_at);
+                                        $hours = floor($duration / 60);
+                                        $minutes = $duration % 60;
+                                    @endphp
+                                    <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-200">
+                                        <span class="text-xs font-semibold text-gray-700">Duration</span>
+                                        <span class="font-bold text-purple-900">{{ $hours }}h {{ $minutes }}m</span>
+                                    </div>
+                                @else
+                                    <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200 text-center">
+                                        <p class="text-xs font-semibold text-yellow-800">Not clocked out</p>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Photo Buttons -->
+                            <div class="flex gap-2">
+                                <button wire:click="showPhoto({{ $attendance->id }}, 'in')" class="flex-1 p-2 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors text-xs font-semibold">
+                                    📸 In
+                                </button>
+                                @if($attendance->clock_out_photo_path)
+                                    <button wire:click="showPhoto({{ $attendance->id }}, 'out')" class="flex-1 p-2 bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-lg transition-colors text-xs font-semibold">
+                                        📸 Out
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <div class="p-8 text-center">
+                            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <p class="text-gray-500 font-medium">No attendance data</p>
+                            <p class="text-sm text-gray-400 mt-1">For {{ $months[$filterMonth] }} {{ $filterYear }}</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                <!-- Desktop View: Table -->
+                <div class="hidden md:block overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead class="bg-gradient-to-r from-indigo-50 to-purple-50 border-b-2 border-indigo-100">
                             <tr>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tanggal</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock In</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock Out</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Durasi</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Foto</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tanggal</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock In</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock Out</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Durasi</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Foto</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -242,16 +319,6 @@
                                                 </button>
                                             @endif
                                         </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6" class="px-6 py-12 text-center">
-                                        <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        <p class="text-gray-500 font-medium">Tidak ada data kehadiran</p>
-                                        <p class="text-sm text-gray-400 mt-1">Untuk bulan {{ $months[$filterMonth] }} {{ $filterYear }}</p>
                                     </td>
                                 </tr>
                             @endforelse

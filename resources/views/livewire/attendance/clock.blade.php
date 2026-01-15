@@ -21,7 +21,7 @@
                 <h1 class=\"text-2xl sm:text-3xl font-bold text-gray-900 mb-2\">
                     {{ $mode === 'in' ? 'Clock In' : 'Clock Out' }} Attendance
                 </h1>
-                <p class=\"text-sm sm:text-base text-gray-600\">Sistem Presensi Berbasis GPS & Selfie</p>
+
                 <div class=\"mt-3 inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200\">
                     <span class=\"w-2 h-2 bg-green-500 rounded-full animate-pulse\"></span>
                     <span class=\"text-xs sm:text-sm font-medium text-gray-700\">{{ now()->format('d M Y, H:i') }} WIB</span>
@@ -69,10 +69,10 @@
                 </div>
             @endif
 
-            <!-- Main Content Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6\">
+            <!-- Main Content Grid - Better for Mobile -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
                 <!-- GPS Status Card -->
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -96,28 +96,28 @@
                         @endif
                     </div>
                     <div class="space-y-3">
-                        <div class="bg-gray-50 rounded-lg p-3">
-                            <p class="text-xs text-gray-600 mb-1">Latitude</p>
-                            <p class="font-mono text-sm font-bold text-gray-900">
-                                {{ $lat ? number_format($lat, 6, '.', '') : '—' }}
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="text-xs text-gray-600 mb-2">Latitude</p>
+                            <p class="font-mono text-lg font-bold text-gray-900">
+                                {{ $lat ? number_format($lat, 5) : 'Pending' }}
                             </p>
                         </div>
-                        <div class="bg-gray-50 rounded-lg p-3">
-                            <p class="text-xs text-gray-600 mb-1">Longitude</p>
-                            <p class="font-mono text-sm font-bold text-gray-900">
-                                {{ $lng ? number_format($lng, 6, '.', '') : '—' }}
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <p class="text-xs text-gray-600 mb-2">Longitude</p>
+                            <p class="font-mono text-lg font-bold text-gray-900">
+                                {{ $lng ? number_format($lng, 5) : 'Pending' }}
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Camera Status Card -->
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0118.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
@@ -135,23 +135,23 @@
                             </span>
                         @endif
                     </div>
-                    <div class="bg-gray-50 rounded-lg p-4 text-center">
+                    <div class="bg-green-50 rounded-lg p-6 text-center">
                         @if($photo)
                             <svg class="w-12 h-12 mx-auto text-green-600 mb-2" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
-                            <p class="text-sm font-medium text-green-700">Foto Tersimpan</p>
+                            <p class="text-sm font-bold text-green-700">Photo Captured</p>
                         @else
-                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-12 h-12 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            <p class="text-sm font-medium text-gray-500">Belum diambil</p>
+                            <p class="text-sm font-medium text-gray-500">No photo yet</p>
                         @endif
                     </div>
                 </div>
 
                 <!-- Time Window Card -->
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-12 h-12 {{ $mode === 'in' ? 'bg-purple-100' : 'bg-orange-100' }} rounded-xl flex items-center justify-center">
                             <svg class="w-6 h-6 {{ $mode === 'in' ? 'text-purple-600' : 'text-orange-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -165,21 +165,21 @@
                     </div>
                     <div class="space-y-3">
                         @if($mode === 'in')
-                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Mulai</span>
+                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100">
+                                <span class="text-sm text-gray-600 font-medium">Mulai</span>
                                 <span class="font-mono text-lg font-bold text-purple-900">06:00</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Selesai</span>
+                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-100">
+                                <span class="text-sm text-gray-600 font-medium">Selesai</span>
                                 <span class="font-mono text-lg font-bold text-purple-900">10:00</span>
                             </div>
                         @else
-                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Mulai</span>
+                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-100">
+                                <span class="text-sm text-gray-600 font-medium">Mulai</span>
                                 <span class="font-mono text-lg font-bold text-orange-900">16:00</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Selesai</span>
+                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg border border-orange-100">
+                                <span class="text-sm text-gray-600 font-medium">Selesai</span>
                                 <span class="font-mono text-lg font-bold text-orange-900">20:00</span>
                             </div>
                         @endif
@@ -188,27 +188,27 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
                 <button type="button" onclick="getLocation()"
-                        class="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-5 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 {{ $lat ? 'opacity-75 cursor-not-allowed' : '' }}"
+                        class="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-4 sm:py-5 px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 {{ $lat ? 'opacity-50 cursor-not-allowed' : '' }}"
                         {{ $lat ? 'disabled' : '' }}>
                     <div class="flex items-center justify-center gap-3">
                         <svg class="w-6 h-6 {{ $lat ? '' : 'group-hover:scale-110 transition-transform' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        <span class="text-lg">{{ $lat ? 'GPS Sudah Diambil' : 'Ambil Lokasi GPS' }}</span>
+                        <span class="text-base sm:text-lg">{{ $lat ? '✓ GPS Captured' : 'Get GPS Location' }}</span>
                     </div>
                 </button>
 
                 <button type="button" onclick="capturePhoto()"
-                        class="group bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-5 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">
+                        class="group bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-4 sm:py-5 px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">
                     <div class="flex items-center justify-center gap-3">
                         <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        <span class="text-lg">Ambil Selfie</span>
+                        <span class="text-base sm:text-lg">{{ $photo ? '✓ Photo Captured' : 'Take Selfie' }}</span>
                     </div>
                 </button>
             </div>
