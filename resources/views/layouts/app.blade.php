@@ -96,12 +96,12 @@
 
                 <!-- Mobile Menu Toggle Button -->
                 <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <img src="{{ asset('images/icon-menu.png') }}" alt="Menu" class="w-8 h-8 object-contain">
+                    <img src="{{ asset('images/icon-menu.png') }}" alt="Menu" class="w-6 h-6 object-contain">
                 </button>
 
-                <!-- User Dropdown (Desktop Only) -->
-                <div class="hidden md:flex items-center gap-4">
-                    <div class="flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
+                <!-- User Dropdown -->
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
                         <div class="w-10 h-10 attendify-gradient rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
@@ -125,19 +125,7 @@
             </div>
 
             <!-- Mobile Navigation -->
-            <div id="mobileMenu" class="md:hidden hidden pb-4 space-y-2 animate-slideDown border-t border-gray-200 mt-4 pt-4">
-                <!-- User Info -->
-                <div class="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100 mb-2">
-                    <div class="w-10 h-10 attendify-gradient rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg flex-shrink-0">
-                        {{ substr(Auth::user()->name, 0, 1) }}
-                    </div>
-                    <div>
-                        <p class="text-sm font-semibold text-gray-900">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
-                    </div>
-                </div>
-
-                <!-- Navigation Links -->
+            <div id="mobileMenu" class="md:hidden hidden pb-4 space-y-2 animate-slideDown">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -152,17 +140,6 @@
                     <img src="{{ asset('images/icon-history.png') }}" alt="History" class="w-5 h-5">
                     History
                 </a>
-
-                <!-- Logout Button -->
-                <form method="POST" action="{{ route('logout') }}" class="mt-3 pt-3 border-t border-gray-200">
-                    @csrf
-                    <button type="submit" class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl font-medium transition-colors border border-red-200">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                        </svg>
-                        Logout
-                    </button>
-                </form>
             </div>
         </div>
     </nav>
@@ -211,14 +188,6 @@
                         mobileMenu.classList.add('hidden');
                     });
                 });
-
-                // Close menu when logout is clicked
-                const logoutForm = mobileMenu.querySelector('form');
-                if (logoutForm) {
-                    logoutForm.addEventListener('submit', function() {
-                        mobileMenu.classList.add('hidden');
-                    });
-                }
             }
         });
     </script>
