@@ -56,18 +56,6 @@
         .animate-slideDown {
             animation: slideDown 0.3s ease-out;
         }
-        .mobile-menu-toggle {
-            transition: all 0.3s ease;
-        }
-        .mobile-menu-toggle.open span:nth-child(1) {
-            transform: rotate(45deg) translate(10px, 10px);
-        }
-        .mobile-menu-toggle.open span:nth-child(2) {
-            opacity: 0;
-        }
-        .mobile-menu-toggle.open span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
     </style>
 </head>
 <body class="font-sans antialiased bg-gray-50">
@@ -107,10 +95,8 @@
                 </div>
 
                 <!-- Mobile Menu Toggle Button -->
-                <button id="mobileMenuToggle" class="md:hidden mobile-menu-toggle p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <span class="block w-6 h-0.5 bg-gray-700 mb-1.5 transition-all duration-300"></span>
-                    <span class="block w-6 h-0.5 bg-gray-700 mb-1.5 transition-all duration-300"></span>
-                    <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+                <button id="mobileMenuToggle" class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <img src="{{ asset('images/icon-menu.png') }}" alt="Menu" class="w-6 h-6 object-contain">
                 </button>
 
                 <!-- User Dropdown -->
@@ -192,7 +178,6 @@
 
             if (mobileMenuToggle && mobileMenu) {
                 mobileMenuToggle.addEventListener('click', function() {
-                    mobileMenuToggle.classList.toggle('open');
                     mobileMenu.classList.toggle('hidden');
                 });
 
@@ -200,7 +185,6 @@
                 const menuLinks = mobileMenu.querySelectorAll('a');
                 menuLinks.forEach(link => {
                     link.addEventListener('click', function() {
-                        mobileMenuToggle.classList.remove('open');
                         mobileMenu.classList.add('hidden');
                     });
                 });
