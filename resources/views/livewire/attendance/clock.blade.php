@@ -13,31 +13,35 @@
         <div class=\"max-w-4xl mx-auto\">
             <!-- Header -->
             <div class=\"text-center mb-6 sm:mb-8\">
-                <div class=\"inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 {{ $mode === 'in' ? 'bg-indigo-600' : 'bg-orange-600' }} rounded-2xl mb-3 sm:mb-4 shadow-lg\">
-                    <svg class=\"w-6 h-6 sm:w-8 sm:h-8 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                <div class=\"inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 {{ $mode === 'in' ? 'bg-indigo-600' : 'bg-orange-600' }} rounded-2xl mb-4 sm:mb-5 shadow-lg\">
+                    <svg class=\"w-8 h-8 sm:w-10 sm:h-10 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
                         <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"/>
                     </svg>
                 </div>
-                <h1 class=\"text-2xl sm:text-3xl font-bold text-gray-900 mb-2\">
-                    {{ $mode === 'in' ? 'Clock In' : 'Clock Out' }} Attendance
+                <h1 class=\"text-3xl sm:text-4xl font-bold text-gray-900 mb-3\">
+                    {{ $mode === 'in' ? 'Clock In' : 'Clock Out' }}
                 </h1>
-                <p class=\"text-sm sm:text-base text-gray-600\">Sistem Presensi Berbasis GPS & Selfie</p>
-                <div class=\"mt-3 inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200\">
+                <p class=\"text-sm sm:text-base text-gray-600 mb-4\">GPS & Selfie Verification</p>
+                <div class=\"inline-flex items-center gap-2 px-4 sm:px-5 py-3 bg-white rounded-full shadow-md border border-gray-200\">
                     <span class=\"w-2 h-2 bg-green-500 rounded-full animate-pulse\"></span>
-                    <span class=\"text-xs sm:text-sm font-medium text-gray-700\">{{ now()->format('d M Y, H:i') }} WIB</span>
+                    <span class=\"text-sm sm:text-base font-semibold text-gray-700\">{{ now()->format('d M Y') }}</span>
+                    <span class=\"text-sm sm:text-base font-bold text-indigo-600\">{{ now()->format('H:i') }} WIB</span>
                 </div>
 
                 {{-- Status Hari Ini --}}
                 @if($todayAttendance)
-                    <div class="mt-4 inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-3 bg-blue-50 border-2 border-blue-200 rounded-xl text-left">
-                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                        </svg>
-                        <div>
-                            <p class="text-xs sm:text-sm font-semibold text-blue-900">Clock In: {{ $todayAttendance->clock_in_at->format('H:i') }}</p>
-                            <p class="text-xs text-blue-700">
-                                {{ $todayAttendance->clock_out_at ? 'Clock Out: ' . $todayAttendance->clock_out_at->format('H:i') : 'Belum Clock Out' }}
-                            </p>
+                    <div class="mt-5 bg-white border-l-4 border-blue-600 rounded-xl p-4 sm:p-5 shadow-md inline-block">
+                        <div class="flex items-start gap-3 text-left">
+                            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                            </svg>
+                            <div>
+                                <p class="text-sm font-bold text-blue-900">Today's Status</p>
+                                <p class="text-lg font-bold text-blue-700 mt-1">{{ $todayAttendance->clock_in_at->format('H:i') }}</p>
+                                <p class="text-xs text-blue-600 mt-1">
+                                    {{ $todayAttendance->clock_out_at ? '✓ ' . $todayAttendance->clock_out_at->format('H:i') : '◆ Not clocked out' }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 @endif
@@ -69,118 +73,119 @@
                 </div>
             @endif
 
-            <!-- Main Content Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6\">
+            <!-- Main Content Grid - Better Mobile Layout -->
+            <div class=\"space-y-4 sm:space-y-6 mb-6\">
                 <!-- GPS Status Card -->
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Lokasi GPS</h3>
-                                <p class="text-xs text-gray-500">High Accuracy</p>
-                            </div>
+                <div class=\"bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300\">
+                    <div class=\"bg-gradient-to-r from-blue-50 to-blue-100 px-4 sm:px-6 py-4 sm:py-5 border-b border-blue-200 flex items-center gap-3\">
+                        <div class=\"w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class=\"w-6 h-6 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z\"/>
+                                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 11a3 3 0 11-6 0 3 3 0 016 0z\"/>
+                            </svg>
+                        </div>
+                        <div class=\"flex-1\">
+                            <h3 class=\"font-bold text-gray-900 text-lg\">GPS Location</h3>
+                            <p class=\"text-xs text-gray-600 mt-0.5\">High Accuracy</p>
                         </div>
                         @if($lat)
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                </svg>
-                                Active
+                            <span class=\"inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white\">
+                                ✓ Active
                             </span>
                         @endif
                     </div>
-                    <div class="space-y-3">
-                        <div class="bg-gray-50 rounded-lg p-3">
-                            <p class="text-xs text-gray-600 mb-1">Latitude</p>
-                            <p class="font-mono text-sm font-bold text-gray-900">
-                                {{ $lat ? number_format($lat, 6, '.', '') : '—' }}
-                            </p>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-3">
-                            <p class="text-xs text-gray-600 mb-1">Longitude</p>
-                            <p class="font-mono text-sm font-bold text-gray-900">
-                                {{ $lng ? number_format($lng, 6, '.', '') : '—' }}
-                            </p>
-                        </div>
+                    <div class=\"p-4 sm:p-6 space-y-3\">
+                        @if($lat)
+                            <div class=\"flex items-center justify-between bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4\">
+                                <span class=\"text-sm font-semibold text-gray-700\">Latitude</span>
+                                <span class=\"font-mono text-lg font-bold text-blue-900\">{{ number_format($lat, 5) }}</span>
+                            </div>
+                            <div class=\"flex items-center justify-between bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-4\">
+                                <span class=\"text-sm font-semibold text-gray-700\">Longitude</span>
+                                <span class=\"font-mono text-lg font-bold text-blue-900\">{{ number_format($lng, 5) }}</span>
+                            </div>
+                        @else
+                            <div class=\"text-center py-6 bg-gray-50 rounded-xl\">
+                                <svg class=\"w-12 h-12 mx-auto text-gray-300 mb-2\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z\"/>
+                                </svg>
+                                <p class=\"text-gray-500 font-medium\">GPS not yet captured</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
                 <!-- Camera Status Card -->
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="font-semibold text-gray-900">Selfie Photo</h3>
-                                <p class="text-xs text-gray-500">640x480px</p>
-                            </div>
+                <div class=\"bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300\">
+                    <div class=\"bg-gradient-to-r from-green-50 to-green-100 px-4 sm:px-6 py-4 sm:py-5 border-b border-green-200 flex items-center gap-3\">
+                        <div class=\"w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class=\"w-6 h-6 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z\"/>
+                                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 13a3 3 0 11-6 0 3 3 0 016 0z\"/>
+                            </svg>
+                        </div>
+                        <div class=\"flex-1\">
+                            <h3 class=\"font-bold text-gray-900 text-lg\">Selfie Photo</h3>
+                            <p class=\"text-xs text-gray-600 mt-0.5\">640×480px Required</p>
                         </div>
                         @if($photo)
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                                </svg>
-                                Ready
+                            <span class=\"inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold bg-green-500 text-white\">
+                                ✓ Ready
                             </span>
                         @endif
                     </div>
-                    <div class="bg-gray-50 rounded-lg p-4 text-center">
+                    <div class=\"p-4 sm:p-6\">
                         @if($photo)
-                            <svg class="w-12 h-12 mx-auto text-green-600 mb-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
-                            </svg>
-                            <p class="text-sm font-medium text-green-700">Foto Tersimpan</p>
+                            <div class=\"bg-green-50 rounded-xl p-6 text-center border-2 border-green-200\">
+                                <svg class=\"w-16 h-16 mx-auto text-green-600 mb-3\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                    <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z\"/>
+                                </svg>
+                                <p class=\"text-lg font-bold text-green-700\">Photo Captured</p>
+                                <p class=\"text-sm text-green-600 mt-1\">Ready for submission</p>
+                            </div>
                         @else
-                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                            <p class="text-sm font-medium text-gray-500">Belum diambil</p>
+                            <div class=\"bg-gray-50 rounded-xl p-6 text-center border-2 border-dashed border-gray-300\">
+                                <svg class=\"w-16 h-16 mx-auto text-gray-300 mb-3\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                                    <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\"/>
+                                </svg>
+                                <p class=\"text-gray-600 font-medium\">No photo yet</p>
+                                <p class=\"text-sm text-gray-500 mt-1\">Tap 'Take Selfie' below</p>
+                            </div>
                         @endif
                     </div>
                 </div>
 
                 <!-- Time Window Card -->
-                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 {{ $mode === 'in' ? 'bg-purple-100' : 'bg-orange-100' }} rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 {{ $mode === 'in' ? 'text-purple-600' : 'text-orange-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                <div class=\"bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300\">
+                    <div class=\"bg-gradient-to-r {{ $mode === 'in' ? 'from-purple-50 to-purple-100' : 'from-orange-50 to-orange-100' }} px-4 sm:px-6 py-4 sm:py-5 border-b {{ $mode === 'in' ? 'border-purple-200' : 'border-orange-200' }} flex items-center gap-3\">
+                        <div class=\"w-12 h-12 {{ $mode === 'in' ? 'bg-purple-600' : 'bg-orange-600' }} rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class=\"w-6 h-6 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"/>
                             </svg>
                         </div>
-                        <div>
-                            <h3 class="font-semibold text-gray-900">Jam Kerja</h3>
-                            <p class="text-xs text-gray-500">{{ $mode === 'in' ? 'Clock In Window' : 'Clock Out Window' }}</p>
+                        <div class=\"flex-1\">
+                            <h3 class=\"font-bold text-gray-900 text-lg\">Working Hours</h3>
+                            <p class=\"text-xs text-gray-600 mt-0.5\">{{ $mode === 'in' ? 'Morning Shift' : 'Afternoon Shift' }}</p>
                         </div>
                     </div>
-                    <div class="space-y-3">
+                    <div class=\"p-4 sm:p-6 space-y-3\">
                         @if($mode === 'in')
-                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Mulai</span>
-                                <span class="font-mono text-lg font-bold text-purple-900">06:00</span>
+                            <div class=\"flex items-center justify-between p-4 {{ 'bg-purple-50 border border-purple-200' }} rounded-xl\">
+                                <span class=\"text-sm font-semibold text-gray-700\">Start</span>
+                                <span class=\"font-mono text-xl font-bold text-purple-900\">06:00</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Selesai</span>
-                                <span class="font-mono text-lg font-bold text-purple-900">10:00</span>
+                            <div class=\"flex items-center justify-between p-4 {{ 'bg-purple-50 border border-purple-200' }} rounded-xl\">
+                                <span class=\"text-sm font-semibold text-gray-700\">End</span>
+                                <span class=\"font-mono text-xl font-bold text-purple-900\">10:00</span>
                             </div>
                         @else
-                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Mulai</span>
-                                <span class="font-mono text-lg font-bold text-orange-900">16:00</span>
+                            <div class=\"flex items-center justify-between p-4 {{ 'bg-orange-50 border border-orange-200' }} rounded-xl\">
+                                <span class=\"text-sm font-semibold text-gray-700\">Start</span>
+                                <span class=\"font-mono text-xl font-bold text-orange-900\">16:00</span>
                             </div>
-                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                                <span class="text-sm text-gray-600">Selesai</span>
-                                <span class="font-mono text-lg font-bold text-orange-900">20:00</span>
+                            <div class=\"flex items-center justify-between p-4 {{ 'bg-orange-50 border border-orange-200' }} rounded-xl\">
+                                <span class=\"text-sm font-semibold text-gray-700\">End</span>
+                                <span class=\"font-mono text-xl font-bold text-orange-900\">20:00</span>
                             </div>
                         @endif
                     </div>
@@ -188,27 +193,27 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <button type="button" onclick="getLocation()"
-                        class="group relative bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-5 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 {{ $lat ? 'opacity-75 cursor-not-allowed' : '' }}"
+            <div class=\"grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6\">
+                <button type=\"button\" onclick=\"getLocation()\"
+                        class=\"group relative bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 sm:py-5 px-4 sm:px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 {{ $lat ? 'opacity-60 cursor-not-allowed' : '' }}\"
                         {{ $lat ? 'disabled' : '' }}>
-                    <div class="flex items-center justify-center gap-3">
-                        <svg class="w-6 h-6 {{ $lat ? '' : 'group-hover:scale-110 transition-transform' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <div class=\"flex items-center justify-center gap-2 sm:gap-3\">
+                        <svg class=\"w-5 h-5 sm:w-6 sm:h-6 {{ $lat ? '' : 'group-hover:scale-110 transition-transform' }}\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z\"/>
+                            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 11a3 3 0 11-6 0 3 3 0 016 0z\"/>
                         </svg>
-                        <span class="text-lg">{{ $lat ? 'GPS Sudah Diambil' : 'Ambil Lokasi GPS' }}</span>
+                        <span class=\"text-base sm:text-lg font-semibold\">{{ $lat ? '✓ GPS Done' : 'Get GPS' }}</span>
                     </div>
                 </button>
 
-                <button type="button" onclick="capturePhoto()"
-                        class="group bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold py-5 px-6 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300">
-                    <div class="flex items-center justify-center gap-3">
-                        <svg class="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <button type=\"button\" onclick=\"capturePhoto()\"
+                        class=\"group bg-gradient-to-br from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-4 sm:py-5 px-4 sm:px-6 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300\">
+                    <div class=\"flex items-center justify-center gap-2 sm:gap-3\">
+                        <svg class=\"w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z\"/>
+                            <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M15 13a3 3 0 11-6 0 3 3 0 016 0z\"/>
                         </svg>
-                        <span class="text-lg">Ambil Selfie</span>
+                        <span class=\"text-base sm:text-lg font-semibold\">{{ $photo ? '✓ Photo Done' : 'Take Selfie' }}</span>
                     </div>
                 </button>
             </div>

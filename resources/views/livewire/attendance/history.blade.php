@@ -141,18 +141,121 @@
                 </div>
             </div>
 
-            <!-- Table Card -->
+            <!-- Table Card - Responsive Layout -->
             <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden animate-slideIn">
-                <div class="overflow-x-auto">
+                <!-- Mobile: Card Layout -->
+                <div class="md:hidden divide-y divide-gray-200">
+                    @forelse($attendances as $attendance)
+                        <div class="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
+                            <!-- Date Header -->
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <span class="text-sm font-bold text-indigo-700">{{ $attendance->clock_in_at->format('d') }}</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-900">{{ $attendance->clock_in_at->format('d M Y') }}</div>
+                                        <div class="text-xs text-gray-500">{{ $attendance->clock_in_at->format('l') }}</div>
+                                    </div>
+                                </div>
+                                @if($attendance->status === 'ok')
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full border border-green-200">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+                                        </svg>
+                                        OK
+                                    </span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-red-100 text-red-800 text-xs font-bold rounded-full border border-red-200">
+                                        ✕
+                                    </span>
+                                @endif
+                            </div>
+
+                            <!-- Time Details -->
+                            <div class="space-y-3 mb-4">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <span class="text-xs text-gray-600 font-medium">Clock In</span>
+                                    <div class="flex items-center gap-2">
+                                        <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                                        </svg>
+                                        <span class="text-sm font-bold text-gray-900">{{ $attendance->clock_in_at->format('H:i') }}</span>
+                                    </div>
+                                </div>
+
+                                @if($attendance->clock_out_at)
+                                    <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                        <span class="text-xs text-gray-600 font-medium">Clock Out</span>
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                                            </svg>
+                                            <span class="text-sm font-bold text-gray-900">{{ $attendance->clock_out_at->format('H:i') }}</span>
+                                        </div>
+                                    </div>
+
+                                    @php
+                                        $duration = $attendance->clock_out_at->diffInMinutes($attendance->clock_in_at);
+                                        $hours = floor($duration / 60);
+                                        $minutes = $duration % 60;
+                                    @endphp
+                                    <div class="flex items-center justify-between p-3 bg-purple-50 rounded-lg border border-purple-200">
+                                        <span class="text-xs text-gray-600 font-medium">Duration</span>
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                                            </svg>
+                                            <span class="text-sm font-bold text-purple-900">{{ $hours }}h {{ $minutes }}m</span>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200 text-center">
+                                        <p class="text-xs text-yellow-800 font-semibold">Not clocked out yet</p>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Photo Buttons -->
+                            <div class="flex gap-2">
+                                <button wire:click="showPhoto({{ $attendance->id }}, 'in')" class="flex-1 flex items-center justify-center gap-2 p-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg transition-colors border border-green-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                    </svg>
+                                    <span class="text-xs font-semibold">In</span>
+                                </button>
+                                @if($attendance->clock_out_photo_path)
+                                    <button wire:click="showPhoto({{ $attendance->id }}, 'out')" class="flex-1 flex items-center justify-center gap-2 p-3 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-lg transition-colors border border-orange-200">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                                        </svg>
+                                        <span class="text-xs font-semibold">Out</span>
+                                    </button>
+                                @endif
+                            </div>
+                        </div>
+                    @empty
+                        <div class="p-8 sm:p-12 text-center">
+                            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <p class="text-gray-500 font-medium">No attendance data</p>
+                            <p class="text-sm text-gray-400 mt-1">For {{ $months[$filterMonth] }} {{ $filterYear }}</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                <!-- Desktop: Table Layout -->
+                <div class="hidden md:block overflow-x-auto">
                     <table class="w-full text-sm">
                         <thead class="bg-gradient-to-r from-indigo-50 to-purple-50 border-b-2 border-indigo-100">
                             <tr>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tanggal</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock In</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock Out</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Durasi</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Foto</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock In</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock Out</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Duration</th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Photo</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -186,7 +289,7 @@
                                                 <span class="text-sm font-mono font-semibold text-gray-900">{{ $attendance->clock_out_at->format('H:i') }}</span>
                                             </div>
                                         @else
-                                            <span class="text-xs text-gray-400 italic">Belum clock out</span>
+                                            <span class="text-xs text-gray-400 italic">Not clocked out</span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
@@ -200,7 +303,7 @@
                                                 <svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
                                                 </svg>
-                                                <span class="text-sm font-semibold text-purple-900">{{ $hours }}j {{ $minutes }}m</span>
+                                                <span class="text-sm font-semibold text-purple-900">{{ $hours }}h {{ $minutes }}m</span>
                                             </div>
                                         @else
                                             <span class="text-xs text-gray-400">—</span>
@@ -250,8 +353,8 @@
                                         <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
-                                        <p class="text-gray-500 font-medium">Tidak ada data kehadiran</p>
-                                        <p class="text-sm text-gray-400 mt-1">Untuk bulan {{ $months[$filterMonth] }} {{ $filterYear }}</p>
+                                        <p class="text-gray-500 font-medium">No attendance data</p>
+                                        <p class="text-sm text-gray-400 mt-1">For {{ $months[$filterMonth] }} {{ $filterYear }}</p>
                                     </td>
                                 </tr>
                             @endforelse
