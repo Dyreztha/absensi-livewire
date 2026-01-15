@@ -56,6 +56,18 @@
         .animate-slideDown {
             animation: slideDown 0.3s ease-out;
         }
+        .mobile-menu-toggle {
+            transition: all 0.3s ease;
+        }
+        .mobile-menu-toggle.open span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+        .mobile-menu-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-toggle.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-gray-50">
@@ -94,6 +106,13 @@
                     </a>
                 </div>
 
+                <!-- Mobile Menu Toggle Button -->
+                <button id="mobileMenuToggle" class="md:hidden mobile-menu-toggle p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <span class="block w-6 h-0.5 bg-gray-700 mb-1.5 transition-all duration-300"></span>
+                    <span class="block w-6 h-0.5 bg-gray-700 mb-1.5 transition-all duration-300"></span>
+                    <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+                </button>
+
                 <!-- User Dropdown -->
                 <div class="flex items-center gap-4">
                     <div class="hidden md:flex items-center gap-3 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
@@ -120,7 +139,7 @@
             </div>
 
             <!-- Mobile Navigation -->
-            <div class="md:hidden pb-4 space-y-2">
+            <div id="mobileMenu" class="md:hidden hidden pb-4 space-y-2 animate-slideDown">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-600' : 'text-gray-700 hover:bg-gray-50' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
@@ -165,5 +184,28 @@
 
     @livewireScripts
     @stack('scripts')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuToggle && mobileMenu) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    mobileMenuToggle.classList.toggle('open');
+                    mobileMenu.classList.toggle('hidden');
+                });
+
+                // Close menu when a link is clicked
+                const menuLinks = mobileMenu.querySelectorAll('a');
+                menuLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        mobileMenuToggle.classList.remove('open');
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
