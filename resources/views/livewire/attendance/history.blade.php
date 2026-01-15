@@ -13,129 +13,129 @@
         }
     </style>
 
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-4 sm:py-8 px-3 sm:px-6 lg:px-8\">
         <div class="max-w-7xl mx-auto">
             <!-- Header -->
-            <div class="mb-8">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-4">
-                        <a href="{{ route('dashboard') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="mb-6 sm:mb-8">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-4">
+                    <div class="flex items-center gap-2 sm:gap-4">
+                        <a href="{{ route('dashboard') }}" class="inline-flex items-center text-xs sm:text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                            <svg class="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                             </svg>
                             Dashboard
                         </a>
                     </div>
-                    <a href="{{ route('attendance.clock') }}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors shadow-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <a href="{{ route('attendance.clock') }}" class="inline-flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-indigo-600 text-white rounded-lg sm:rounded-xl hover:bg-indigo-700 transition-colors shadow-lg text-xs sm:text-sm font-medium">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         Clock In/Out
                     </a>
                 </div>
                 
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">📋 Riwayat Kehadiran</h1>
-                <p class="text-gray-600">History presensi Anda dengan detail lengkap</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">📋 Riwayat Kehadiran</h1>
+                <p class="text-sm sm:text-base text-gray-600">History presensi Anda dengan detail lengkap</p>
             </div>
 
             <!-- Filter Card -->
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-6 animate-slideIn">
-                <div class="flex flex-col md:flex-row gap-4 items-end">
-                    <div class="flex-1">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
-                            </svg>
-                            Bulan
-                        </label>
-                        <select wire:model.live="filterMonth" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-                            @foreach($months as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 mb-6 animate-slideIn">
+                <div class="flex flex-col gap-3 sm:gap-4 items-end">
+                    <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                                <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+                                </svg>
+                                Bulan
+                            </label>
+                            <select wire:model.live="filterMonth" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm border-2 border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                                @foreach($months as $value => $label)
+                                    <option value="{{ $value }}">{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                                <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
+                                </svg>
+                                Tahun
+                            </label>
+                            <select wire:model.live="filterYear" class="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm border-2 border-gray-200 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
+                                @foreach($years as $year)
+                                    <option value="{{ $year }}">{{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="flex-1">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
-                            </svg>
-                            Tahun
-                        </label>
-                        <select wire:model.live="filterYear" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all">
-                            @foreach($years as $year)
-                                <option value="{{ $year }}">{{ $year }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="flex-shrink-0">
-                        <button wire:click="$refresh" class="px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl font-medium transition-colors flex items-center gap-2 border-2 border-gray-200">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                            </svg>
-                            Refresh
-                        </button>
-                    </div>
+                    <button wire:click="$refresh" class="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg sm:rounded-xl font-medium transition-colors flex items-center justify-center gap-2 border-2 border-gray-200\">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24\">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                        Refresh
+                    </button>
                 </div>
             </div>
 
             <!-- Stats Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6\">
+                <div class="bg-white rounded-lg sm:rounded-xl shadow-md border border-gray-200 p-3 sm:p-5\">
+                    <div class="flex items-center gap-2 sm:gap-3\">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z\"/>
                             </svg>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600">Total Hadir</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $attendances->total() }}</p>
+                        <div class=\"min-w-0\">
+                            <p class=\"text-xs sm:text-sm text-gray-600\">Total Hadir</p>
+                            <p class=\"text-lg sm:text-2xl font-bold text-gray-900\">{{ $attendances->total() }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/>
+                <div class="bg-white rounded-lg sm:rounded-xl shadow-md border border-gray-200 p-3 sm:p-5\">
+                    <div class="flex items-center gap-2 sm:gap-3\">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-blue-600\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                <path d=\"M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z\"/>
                             </svg>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600">Bulan Ini</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $months[$filterMonth] }}</p>
+                        <div class=\"min-w-0\">
+                            <p class=\"text-xs sm:text-sm text-gray-600\">Bulan Ini</p>
+                            <p class=\"text-lg sm:text-2xl font-bold text-gray-900\">{{ $months[$filterMonth] }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                <div class="bg-white rounded-lg sm:rounded-xl shadow-md border border-gray-200 p-3 sm:p-5\">
+                    <div class="flex items-center gap-2 sm:gap-3\">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-purple-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-purple-600\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                <path fill-rule=\"evenodd\" d=\"M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z\"/>
                             </svg>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600">Avg Durasi</p>
-                            <p class="text-2xl font-bold text-gray-900">
+                        <div class=\"min-w-0\">
+                            <p class=\"text-xs sm:text-sm text-gray-600\">Avg Durasi</p>
+                            <p class=\"text-lg sm:text-2xl font-bold text-gray-900\">
                                 {{ $attendances->where('clock_out_at')->count() > 0 ? round($attendances->where('clock_out_at')->avg(function($a) { return $a->clock_out_at ? $a->clock_out_at->diffInHours($a->clock_in_at) : 0; }), 1) : 0 }}h
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
+                <div class="bg-white rounded-lg sm:rounded-xl shadow-md border border-gray-200 p-3 sm:p-5\">
+                    <div class="flex items-center gap-2 sm:gap-3\">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0\">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-orange-600\" fill=\"currentColor\" viewBox=\"0 0 20 20\">
+                                <path fill-rule=\"evenodd\" d=\"M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z\"/>
                             </svg>
                         </div>
-                        <div>
-                            <p class="text-sm text-gray-600">Halaman</p>
-                            <p class="text-2xl font-bold text-gray-900">{{ $attendances->currentPage() }}/{{ $attendances->lastPage() }}</p>
+                        <div class=\"min-w-0\">
+                            <p class=\"text-xs sm:text-sm text-gray-600\">Halaman</p>
+                            <p class=\"text-lg sm:text-2xl font-bold text-gray-900\">{{ $attendances->currentPage() }}/{{ $attendances->lastPage() }}</p>
                         </div>
                     </div>
                 </div>
@@ -144,15 +144,15 @@
             <!-- Table Card -->
             <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden animate-slideIn">
                 <div class="overflow-x-auto">
-                    <table class="w-full">
+                    <table class="w-full text-sm">
                         <thead class="bg-gradient-to-r from-indigo-50 to-purple-50 border-b-2 border-indigo-100">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tanggal</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock In</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock Out</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Durasi</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Foto</th>
+                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Tanggal</th>
+                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock In</th>
+                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Clock Out</th>
+                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Durasi</th>
+                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
+                                <th class="px-3 sm:px-6 py-2 sm:py-4 text-center text-xs font-semibold text-gray-700 uppercase tracking-wider">Foto</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">

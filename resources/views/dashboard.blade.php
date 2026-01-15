@@ -1,33 +1,33 @@
 <x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-4 sm:py-12\">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 sm:px-6 lg:px-8\">
             <!-- Welcome Header -->
-            <div class="mb-8">
-                <div class="attendify-gradient rounded-3xl shadow-2xl p-8 md:p-12 text-white relative overflow-hidden">
+            <div class="mb-6 sm:mb-8\">
+                <div class="attendify-gradient rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 md:p-12 text-white relative overflow-hidden\">
                     <div class="absolute top-0 right-0 opacity-10">
                         <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                         </svg>
                     </div>
                     <div class="relative z-10">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-16 h-16 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
-                                <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-white/20 backdrop-blur rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
+                                <svg class="w-6 h-6 sm:w-10 sm:h-10" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="text-3xl md:text-4xl font-extrabold mb-2">Welcome back, {{ Auth::user()->name }}! 👋</h1>
-                                <p class="text-blue-100 text-lg">{{ now()->format('l, d F Y') }} • {{ now()->format('H:i') }} WIB</p>
+                                <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-2">Welcome back, {{ Auth::user()->name }}! 👋</h1>
+                                <p class="text-xs sm:text-base text-blue-100">{{ now()->format('l, d F Y') }} • {{ now()->format('H:i') }} WIB</p>
                             </div>
                         </div>
-                        <p class="text-xl text-white/90 max-w-2xl">Ready to manage your attendance? Track your work hours with precision and ease.</p>
+                        <p class="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl">Ready to manage your attendance? Track your work hours with precision and ease.</p>
                     </div>
                 </div>
             </div>
 
             <!-- Quick Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8\">
                 @php
                     $today = \App\Models\Attendance::where('user_id', Auth::id())
                         ->whereDate('clock_in_at', today())
@@ -49,55 +49,55 @@
                 @endphp
 
                 <!-- Today Status -->
-                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border-2 border-gray-100 p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-start sm:items-center justify-between mb-4 gap-3">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                             </svg>
                         </div>
                         @if($today)
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">ACTIVE</span>
+                            <span class="px-2 sm:px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold flex-shrink-0">ACTIVE</span>
                         @else
-                            <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold">PENDING</span>
+                            <span class="px-2 sm:px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold flex-shrink-0">PENDING</span>
                         @endif
                     </div>
-                    <h3 class="text-gray-500 text-sm font-medium mb-1">Today's Status</h3>
-                    <p class="text-3xl font-extrabold text-gray-900 mb-2">
+                    <h3 class="text-gray-500 text-xs sm:text-sm font-medium mb-1">Today's Status</h3>
+                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2">
                         {{ $today ? 'Clocked In' : 'Not Yet' }}
                     </p>
                     @if($today)
-                        <p class="text-sm text-gray-600">
+                        <p class="text-xs sm:text-sm text-gray-600">
                             In: {{ $today->clock_in_at->format('H:i') }} 
                             @if($today->clock_out_at)
                                 • Out: {{ $today->clock_out_at->format('H:i') }}
                             @endif
                         </p>
                     @else
-                        <p class="text-sm text-gray-600">Start your day with clock in</p>
+                        <p class="text-xs sm:text-sm text-gray-600">Start your day with clock in</p>
                     @endif
                 </div>
 
                 <!-- This Month -->
-                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border-2 border-gray-100 p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-start sm:items-center justify-between mb-4 gap-3">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"/>
                             </svg>
                         </div>
-                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">{{ now()->format('M Y') }}</span>
+                        <span class="px-2 sm:px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold flex-shrink-0">{{ now()->format('M Y') }}</span>
                     </div>
-                    <h3 class="text-gray-500 text-sm font-medium mb-1">This Month</h3>
-                    <p class="text-3xl font-extrabold text-gray-900 mb-2">{{ $thisMonth }} Days</p>
-                    <p class="text-sm text-gray-600">Total attendance recorded</p>
+                    <h3 class="text-gray-500 text-xs sm:text-sm font-medium mb-1">This Month</h3>
+                    <p class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2">{{ $thisMonth }} Days</p>
+                    <p class="text-xs sm:text-sm text-gray-600">Total attendance recorded</p>
                 </div>
 
                 <!-- Average Duration -->
-                <div class="bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border-2 border-gray-100 p-4 sm:p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-start sm:items-center justify-between mb-4 gap-3">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg flex-shrink-0">
+                            <svg class="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
                             </svg>
                         </div>
@@ -110,7 +110,7 @@
             </div>
 
             <!-- Quick Actions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8\">
                 <!-- Clock In/Out Card -->
                 <a href="{{ route('attendance.clock') }}" class="group bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 hover:border-blue-200">
                     <div class="flex items-center gap-6">

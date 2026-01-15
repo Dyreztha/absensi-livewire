@@ -9,32 +9,32 @@
         }
     </style>
 
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
+    <div class=\"min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-4 sm:py-8 px-3 sm:px-6 lg:px-8\">
+        <div class=\"max-w-4xl mx-auto\">
             <!-- Header -->
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-16 h-16 {{ $mode === 'in' ? 'bg-indigo-600' : 'bg-orange-600' }} rounded-2xl mb-4 shadow-lg">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <div class=\"text-center mb-6 sm:mb-8\">
+                <div class=\"inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 {{ $mode === 'in' ? 'bg-indigo-600' : 'bg-orange-600' }} rounded-2xl mb-3 sm:mb-4 shadow-lg\">
+                    <svg class=\"w-6 h-6 sm:w-8 sm:h-8 text-white\" fill=\"none\" stroke=\"currentColor\" viewBox=\"0 0 24 24\">
+                        <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z\"/>
                     </svg>
                 </div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                <h1 class=\"text-2xl sm:text-3xl font-bold text-gray-900 mb-2\">
                     {{ $mode === 'in' ? 'Clock In' : 'Clock Out' }} Attendance
                 </h1>
-                <p class="text-gray-600">Sistem Presensi Berbasis GPS & Selfie</p>
-                <div class="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    <span class="text-sm font-medium text-gray-700">{{ now()->format('d M Y, H:i') }} WIB</span>
+                <p class=\"text-sm sm:text-base text-gray-600\">Sistem Presensi Berbasis GPS & Selfie</p>
+                <div class=\"mt-3 inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-white rounded-full shadow-sm border border-gray-200\">
+                    <span class=\"w-2 h-2 bg-green-500 rounded-full animate-pulse\"></span>
+                    <span class=\"text-xs sm:text-sm font-medium text-gray-700\">{{ now()->format('d M Y, H:i') }} WIB</span>
                 </div>
 
                 {{-- Status Hari Ini --}}
                 @if($todayAttendance)
-                    <div class="mt-4 inline-flex items-center gap-3 px-5 py-3 bg-blue-50 border-2 border-blue-200 rounded-xl">
-                        <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="mt-4 inline-flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 px-3 sm:px-5 py-2 sm:py-3 bg-blue-50 border-2 border-blue-200 rounded-xl text-left">
+                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                         </svg>
-                        <div class="text-left">
-                            <p class="text-sm font-semibold text-blue-900">Clock In: {{ $todayAttendance->clock_in_at->format('H:i') }}</p>
+                        <div>
+                            <p class="text-xs sm:text-sm font-semibold text-blue-900">Clock In: {{ $todayAttendance->clock_in_at->format('H:i') }}</p>
                             <p class="text-xs text-blue-700">
                                 {{ $todayAttendance->clock_out_at ? 'Clock Out: ' . $todayAttendance->clock_out_at->format('H:i') : 'Belum Clock Out' }}
                             </p>
@@ -46,21 +46,21 @@
             <!-- Alert Messages -->
             @if($message)
                 <div class="mb-6 animate-fadeIn">
-                    <div class="max-w-2xl mx-auto p-4 rounded-xl border-2 {{ $status === 'ok' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200' }} shadow-md">
-                        <div class="flex items-start gap-3">
-                            <div class="flex-shrink-0">
+                    <div class="max-w-2xl mx-auto p-3 sm:p-4 rounded-xl border-2 {{ $status === 'ok' ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200' }} shadow-md">
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <div class="flex-shrink-0 mt-0.5">
                                 @if($status === 'ok')
-                                    <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
                                     </svg>
                                 @else
-                                    <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+                                    <svg class="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z\"/>
                                     </svg>
                                 @endif
                             </div>
                             <div class="flex-1">
-                                <p class="font-semibold {{ $status === 'ok' ? 'text-green-900' : 'text-red-900' }}">
+                                <p class="text-sm sm:text-base font-semibold {{ $status === 'ok' ? 'text-green-900' : 'text-red-900' }}\">
                                     {{ $message }}
                                 </p>
                             </div>
@@ -70,9 +70,9 @@
             @endif
 
             <!-- Main Content Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6\">
                 <!-- GPS Status Card -->
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
@@ -112,7 +112,7 @@
                 </div>
 
                 <!-- Camera Status Card -->
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
@@ -151,7 +151,7 @@
                 </div>
 
                 <!-- Time Window Card -->
-                <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 hover:shadow-xl transition-shadow duration-300">
+                <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300\">
                     <div class="flex items-center gap-3 mb-4">
                         <div class="w-12 h-12 {{ $mode === 'in' ? 'bg-purple-100' : 'bg-orange-100' }} rounded-xl flex items-center justify-center">
                             <svg class="w-6 h-6 {{ $mode === 'in' ? 'text-purple-600' : 'text-orange-600' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
